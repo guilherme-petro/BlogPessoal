@@ -1,0 +1,543 @@
+openapi: 3.0.1
+info:
+  title: Projeto Blog Pessoal
+  description: Projeto Blog Pessoal - Generation Brasil
+  contact:
+    name: Guilherme Petro
+    url: https://github.com/guilherme-petro/BlogPessoal
+    email: guilhermepetron@gmail.com
+  license:
+    name: Generation Brasil
+    url: https://brazil.generation.org/
+  version: v0.0.1
+externalDocs:
+  description: Github
+  url: https://github.com/guilherme-petro/
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /tema:
+    get:
+      tags:
+        - tema-controller
+      operationId: getAll
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+    put:
+      tags:
+        - tema-controller
+      operationId: put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tema'
+        required: true
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+    post:
+      tags:
+        - tema-controller
+      operationId: post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tema'
+        required: true
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /postagens:
+    get:
+      tags:
+        - postagem-controller
+      operationId: GetAll
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+    put:
+      tags:
+        - postagem-controller
+      operationId: put_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Postagem'
+        required: true
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+    post:
+      tags:
+        - postagem-controller
+      operationId: post_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Postagem'
+        required: true
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /usuarios/logar:
+    post:
+      tags:
+        - usuario-controller
+      operationId: Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioLogin'
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /usuarios/cadastrar:
+    post:
+      tags:
+        - usuario-controller
+      operationId: postUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+        required: true
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /usuarios:
+    get:
+      tags:
+        - usuario-controller
+      operationId: findAllUsuario
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /usuarios/{id}:
+    get:
+      tags:
+        - usuario-controller
+      operationId: findByIdUsuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+    delete:
+      tags:
+        - usuario-controller
+      operationId: deleteUsuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /usuarios/nome/{nome}:
+    get:
+      tags:
+        - usuario-controller
+      operationId: findByNomeUsuario
+      parameters:
+        - name: nome
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /tema/{id}:
+    get:
+      tags:
+        - tema-controller
+      operationId: getById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+    delete:
+      tags:
+        - tema-controller
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /tema/nome/{nome}:
+    get:
+      tags:
+        - tema-controller
+      operationId: getByName
+      parameters:
+        - name: nome
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /postagens/{id}:
+    get:
+      tags:
+        - postagem-controller
+      operationId: GetById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+    delete:
+      tags:
+        - postagem-controller
+      operationId: delete_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+  /postagens/titulo/{titulo}:
+    get:
+      tags:
+        - postagem-controller
+      operationId: GetByTitulo
+      parameters:
+        - name: titulo
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso!
+        '201':
+          description: Objeto Persistido!
+        '204':
+          description: Objeto Excluído!
+        '400':
+          description: Erro na Requisição!
+        '401':
+          description: Acesso Não Autorizado!
+        '404':
+          description: Objeto Não Encontrado!
+        '500':
+          description: Erro na Aplicação!
+components:
+  schemas:
+    Postagem:
+      required:
+        - texto
+        - titulo
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        titulo:
+          maxLength: 100
+          minLength: 5
+          type: string
+        texto:
+          maxLength: 500
+          minLength: 10
+          type: string
+        data:
+          type: string
+          format: date-time
+        tema:
+          $ref: '#/components/schemas/Tema'
+    Tema:
+      required:
+        - descricao
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        descricao:
+          type: string
+        postagem:
+          type: array
+          items:
+            $ref: '#/components/schemas/Postagem'
+    UsuarioLogin:
+      type: object
+      properties:
+        nome:
+          type: string
+        usuario:
+          type: string
+        senha:
+          type: string
+        token:
+          type: string
+    Usuario:
+      required:
+        - nome
+        - senha
+        - usuario
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          maxLength: 100
+          minLength: 2
+          type: string
+        usuario:
+          maxLength: 100
+          minLength: 5
+          type: string
+          example: email@email.com.br
+        senha:
+          maxLength: 2147483647
+          minLength: 6
+          type: string
+        postagem:
+          type: array
+          items:
+            $ref: '#/components/schemas/Postagem'
