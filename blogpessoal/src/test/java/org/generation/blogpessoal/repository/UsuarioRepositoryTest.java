@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Optional;
 
-import org.generation.blogpessoal.model.Usuario;
-import org.generation.blogpessoal.service.UsuarioService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -17,43 +15,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) //Indica os resultados dos teste por cada classe, em vez de uma única vez
-public class UsuarioRepositoryTest {
+import org.generation.blogpessoal.model.Usuario;
 
-	@Autowired
-	private UsuarioService usuarioService;
-	
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class UsuarioRepositoryTest {
+    
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 	@BeforeAll
-	void start() {
-		usuarioRepository.save(new Usuario(0L, "Ramon Daniel Santos", "ramonzito@gmail.com", "1223456789"));
-		usuarioRepository.save(new Usuario(0L, "Marcos Santos Sartorio", "marcsart@hotmail.com", "senhamarcos"));
-		usuarioRepository.save(new Usuario(0L, "Giovanna Pasqual Santos", "giovannateste", "Senha!G1"));
-	}
-	
-	@Test //Resultados: Pass (certo), Fail (não retorna o resultado esperado) e Error (erro de sintaxe)
-	@DisplayName("Retorna apenas um usuário")
-	public void retornarUsuario() {
-		
-		Optional<Usuario> usuario = usuarioRepository.findByUsuario("giovannateste");
-		assertTrue(usuario.get().getUsuario().equals("giovannateste"));
+	void start(){
+
+		usuarioRepository.save(new Usuario(0L, "João da Silva", "joao@email.com.br", "13465278"));
+		usuarioRepository.save(new Usuario(0L, "Manuela João", "manuela@email.com.br", "13465278"));
+		usuarioRepository.save(new Usuario(0L, "Adriana da Silva", "adriana@email.com.br", "13465278"));
+        usuarioRepository.save(new Usuario(0L, "Paulo Antunes", "paulo@email.com.br", "13465278"));
+        usuarioRepository.save(new Usuario(0L, "João de Barro", "barro@email.com.br", "13465278"));
+        usuarioRepository.save(new Usuario(0L, "Maria do Carmo", "maria@email.com.br", "13465278"));
 
 	}
-	
-	
+
 	@Test
-	@DisplayName("Retorna três usuários")
-	public void retornarTresUsuarios() {
-		
-		List<Usuario> listaUsuarios = usuarioRepository.findAllByNomeContainingIgnoreCase("santos");
-		assertEquals(3, listaUsuarios.size());
-		
-		assertTrue(listaUsuarios.get(0).getNome().equals("Ramon Daniel Santos"));
-		assertTrue(listaUsuarios.get(1).getNome().equals("Marcos Santos Sartorio"));
-		assertTrue(listaUsuarios.get(2).getNome().equals("Giovanna Pasqual Santos"));
+	@DisplayName("Retorna 1 usuario")
+	public void deveRetornarUmUsuario() {
+
+		Optional<Usuario> usuario = usuarioRepository.findByEmail("joao@email.com.br");
+
+		assertTrue(usuario.get().getEmail().equals("joao@email.com.br"));
+	}
+
+	@Test
+	@DisplayName("Retorna 3 usuarios")
+	public void deveRetornarTresUsuarios() {
+
+		List<Usuario> listaDeUsuarios = usuarioRepository.findAllByNomeContainingIgnoreCase("joão");
+
+		assertEquals(3, listaDeUsuarios.size());
+
+		assertTrue(listaDeUsuarios.get(0).getNome().equals("João da Silva"));
+		assertTrue(listaDeUsuarios.get(1).getNome().equals("Manuela João"));
+		assertTrue(listaDeUsuarios.get(2).getNome().equals("João de Barro"));
 		
 	}
 
@@ -61,6 +63,5 @@ public class UsuarioRepositoryTest {
 	public void end() {
 		usuarioRepository.deleteAll();
 	}
-	
 	
 }

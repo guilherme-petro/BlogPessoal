@@ -19,79 +19,82 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	public Optional<Usuario> cadastrarUsuario(Usuario usuario){
-		
-		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
+
+	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
+
+		if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent())
 			return Optional.empty();
-		
+
 		usuario.setSenha(criptografarSenha(usuario.getSenha()));
-		
+
 		return Optional.of(usuarioRepository.save(usuario));
-		
+
 	}
-	
+
 	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
 
-		
-		if(usuarioRepository.findById(usuario.getId()).isPresent()) {
-			
-			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
-			
-			if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
-				throw new ResponseStatusException(
-						HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
-			
+		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
+
+			Optional<Usuario> buscaUsuario = usuarioRepository.findByEmail(usuario.getEmail());
+
+			if ((buscaUsuario.isPresent()) && (buscaUsuario.get().getId() != usuario.getId()))
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
+
 			usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
 			return Optional.ofNullable(usuarioRepository.save(usuario));
-			
+
 		}
-		
-			return Optional.empty();
-	
-	}	
-	
-	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin){
-		
-		Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
-		
-		if(usuario.isPresent()) {
-			
-			if(compararSenhas(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
-				
-				usuarioLogin.get().setNome(usuario.get().getNome());
-				usuarioLogin.get().setToken(gerarBasicToken(usuarioLogin.get().getUsuario(), usuarioLogin.get().getSenha()));
+
+		return Optional.empty();
+
+	}
+
+	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
+
+		Optional<Usuario> usuario = usuarioRepository.findByEmail(usuarioLogin.get().getEmail());
+
+		if (usuario.isPresent()) {
+
+			if (compararSenhas(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
+
+				usuarioLogin.get()
+				.setToken(gerarBasicToken(usuarioLogin.get().getEmail(), usuarioLogin.get().getSenha()));
+				usuarioLogin.get().setId(usuarioLogin.get().getId());
 				usuarioLogin.get().setSenha(usuario.get().getSenha());
+				usuarioLogin.get().setNome(usuario.get().getNome());
+				usuarioLogin.get().setFoto(usuario.get().getFoto());
+				usuarioLogin.get().setTipo(usuario.get().getTipo());
 				
+
 				return usuarioLogin;
 			}
 		}
-		
+
 		return Optional.empty();
 	}
-	
+
 	private String criptografarSenha(String senha) {
-		
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
+
 		return encoder.encode(senha);
 	}
-	
+
 	private boolean compararSenhas(String senhaDigitada, String senhaBanco) {
-		
+
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
+
 		return encoder.matches(senhaDigitada, senhaBanco);
-		
+
 	}
-	
+
 	private String gerarBasicToken(String usuario, String senha) {
-		
+
 		String token = usuario + ":" + senha;
 		byte[] tokenBase64 = Base64.encodeBase64(token.getBytes(Charset.forName("US-ASCII")));
 		return "Basic " + new String(tokenBase64);
-		
+
 	}
-	
+
 }
