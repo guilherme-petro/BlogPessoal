@@ -60,7 +60,7 @@ public class UsuarioService {
 
 				usuarioLogin.get()
 				.setToken(gerarBasicToken(usuarioLogin.get().getEmail(), usuarioLogin.get().getSenha()));
-				usuarioLogin.get().setId(usuarioLogin.get().getId());
+				usuarioLogin.get().setId(usuario.get().getId());
 				usuarioLogin.get().setSenha(usuario.get().getSenha());
 				usuarioLogin.get().setNome(usuario.get().getNome());
 				usuarioLogin.get().setFoto(usuario.get().getFoto());
